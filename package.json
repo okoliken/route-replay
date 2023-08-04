@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port 8080",
     "build": "run-p type-check build-only",
     "preview": "vite preview",
     "build-only": "vite build",
@@ -12,10 +12,12 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@googlemaps/js-api-loader": "^1.16.2",
     "@invisiburu/vue-picker": "^2.1.0",
     "@vuepic/vue-datepicker": "^5.4.0",
     "@vueuse/core": "^10.3.0",
     "animate.css": "^4.1.1",
+    "axios": "^1.4.0",
     "remixicon": "^3.5.0",
     "vue": "^3.3.4",
     "vue-select": "^4.0.0-beta.6"

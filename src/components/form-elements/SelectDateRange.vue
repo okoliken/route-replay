@@ -5,7 +5,7 @@ const date = ref()
 </script>
 
 <template>
-  <div class="bg-white bx-shw py-[7px] px-[16px] rounded-[8px] border border-shuttlersGrey relative z-[9999]">
+  <div class="bg-white bx-shw py-[7px] px-[16px] rounded-[8px] border border-shuttlersGrey relative !z-[9999]">
     <VueDatePicker
       :dark="false"
       class="placeholder:text-[16px] placeholder:font-light"

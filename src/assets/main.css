@@ -86,3 +86,8 @@ body {
   border:none;
   outline: none;
 }
+
+.dp__instance_calendar.dp__menu_inner{
+  position: relative;
+  z-index: 9999999;
+}

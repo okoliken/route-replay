@@ -1,4 +1,10 @@
 
+<script lang="ts" setup>
+import  { ref } from 'vue'
+
+</script>
+
+
 
 <template>
     <div class="w-full bx-shw bg-white py-[14px] px-[16px] rounded-[8px] relative border border-shuttlersGrey">
