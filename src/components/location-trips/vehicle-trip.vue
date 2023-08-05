@@ -58,8 +58,7 @@ const selectTrip = (stamps:trip) => {
 <template>
   <div>
     <div
-     
-      class="trip-timestamp relative flex items-center justify-between py-[5px] px-[12px] cursor-pointer w-[310px]"
+      class="trip-timestamp relative z-0 flex items-center justify-between py-[5px] px-[12px] cursor-pointer w-[310px]"
     >
       <p class="text-textDarkGrey text-[16px]">{{ text }}</p>
       <i
