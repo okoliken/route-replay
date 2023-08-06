@@ -2,8 +2,11 @@ import tripCall, { type reqMethod } from "../axios";
 import { ref, watch, computed, isProxy, toRaw, toRefs } from "vue";
 import { useDateFormat, watchDebounced } from "@vueuse/core";
 
+interface Result {
+    route:{[x:string]:any}
+}
 
-const searchResult = ref([]);
+const searchResult = ref<Result[]>([]);
 const route = ref("");
 const searchQuery = ref("");
 const searchRoute = ref("");

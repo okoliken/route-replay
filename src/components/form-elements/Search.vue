@@ -28,7 +28,7 @@ onMounted(async () => {
 
 
 <template>
-    <div class="w-full bx-shw bg-white py-[14px] px-[16px] rounded-[8px] relative border border-shuttlersGrey">
+    <div class="w-full bx-shw bg-white py-[14px] px-[16px] rounded-[8px] relative z-50 border border-shuttlersGrey">
         <input 
             v-model="searchQuery"
             placeholder="Search by vehicle number"

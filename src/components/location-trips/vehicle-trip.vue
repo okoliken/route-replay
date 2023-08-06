@@ -42,7 +42,12 @@ const timeJourney = ref<trip []>([
     text: 'Trip on IYJ95',
     date: '12th March, 2023',
     timeStamp: '02:01:00'
-  }
+  },
+  {
+    text: 'Trip on IYJ95',
+    date: '12th March, 2023',
+    timeStamp: '02:01:00'
+  },
 ])
 
 onClickOutside(dropDown, () => stampIsOpen.value = false)
@@ -70,9 +75,9 @@ const selectTrip = (stamps:trip) => {
     <div
      ref="dropDown"
       v-if="stampIsOpen"
-      class="time-stamp-log pt-[18px] pb-[10px]  mt-3 animate__animated animate__fadeIn relative z-[99999]"
+      class="time-stamp-log pt-[18px] pb-[10px] h-[420px] overflow-scroll  mt-3 animate__animated animate__fadeIn relative z-[99999]"
     >
-      <div class="mb-4 border-b border-[#F2F2F2] pb-1 cursor-pointer" v-for="(stamps, index) in timeJourney" :key="index">
+      <div class="mb-4 border-b border-[#F2F2F2] pb-1 cursor-pointer   " v-for="(stamps, index) in timeJourney" :key="index">
         <div @click="selectTrip(stamps)" class="flex items-center justify-between pb-1 hover:bg-gray-100 py-px px-[16px]">
           <div class="flex flex-col">
             <p class="text-textDark text-[14px] font-medium">{{ stamps.text }}</p>

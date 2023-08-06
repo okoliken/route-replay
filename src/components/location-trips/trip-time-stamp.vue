@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
+// @ts-ignore
 import GreenVue from '../stamp-icons/Green.vue'
 const text = ref('Trip timestamp')
 const stampIsOpen = ref(false)
@@ -42,7 +43,7 @@ const timeJourney = reactive([
   <div> 
     <div
       @click="stampIsOpen = !stampIsOpen"
-      class="trip-timestamp relative flex items-center justify-between py-[4px] px-[12px] cursor-pointer z-50"
+      class="trip-timestamp flex items-center relative justify-between py-[4px] px-[12px] cursor-pointer z-50"
     >
       <p class="text-textDarkGrey text-[16px]">{{ text }}</p>
       <i

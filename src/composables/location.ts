@@ -7,17 +7,17 @@ export const useGeolocation = () => {
 
 
     let watcher:any = null
-    // onMounted(() => {
-    //     if(isSupported) {
-    //         watcher = navigator.geolocation.watchPosition(position => {
-    //             coordinates.value = position.coords
-    //         })
-    //     }
-    // })
+    onMounted(() => {
+        if(isSupported) {
+            watcher = navigator.geolocation.watchPosition(position => {
+                coordinates.value = position.coords
+            })
+        }
+    })
 
-    // onUnmounted(() => {
-    //     if(watcher)  navigator.geolocation.clearWatch(watcher)
-    // })
+    onUnmounted(() => {
+        if(watcher)  navigator.geolocation.clearWatch(watcher)
+    })
     return {
         coordinates,
         isSupported
