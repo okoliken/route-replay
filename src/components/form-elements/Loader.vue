@@ -25,11 +25,11 @@
     border: 2px solid #fff;
     opacity: 1;
     border-radius: 50%;
-    animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+    animation: lds-ripple .3s cubic-bezier(0, 0.2, 0.8, 1) infinite;
 }
 
 .lds-ripple div:nth-child(2) {
-    animation-delay: -0.5s;
+    animation-delay: -0.1s;
 }
 
 @keyframes lds-ripple {
@@ -64,4 +64,5 @@
         height: 72px;
         opacity: 0;
     }
-}</style>
+}
+</style>

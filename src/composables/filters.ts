@@ -1,6 +1,6 @@
 import tripCall, { type reqMethod } from "../axios";
-import { ref, watch, computed, isProxy, toRaw, toRefs } from "vue";
-import { useDateFormat, watchDebounced } from "@vueuse/core";
+import { ref, computed, isProxy, toRaw } from "vue";
+import { useDateFormat } from "@vueuse/core";
 
 interface Result {
     route:{[x:string]:any}
@@ -13,8 +13,6 @@ const searchRoute = ref("");
 const date = ref("");
 const searching = ref(false)
 export const useFilters = () => {
-
-
     const splitDateFromTo = computed(() => {
         if (date.value && isProxy(date.value)) {
             const newDate = toRaw(date.value);
@@ -24,7 +22,6 @@ export const useFilters = () => {
                 to: useDateFormat(newDate[1], "YYYY-MM-DD").value,
             };
         }
-
         return;
     });
 
@@ -35,7 +32,6 @@ export const useFilters = () => {
             method: reqMthd,
             returnPromise: true,
         };
-
         try {
             searching.value = true
             const response_val = await tripCall(params);
@@ -43,13 +39,8 @@ export const useFilters = () => {
             searchResult.value = response_val.data?.data;
             searching.value = false
         } catch (error) {
-            console.log(error)
             searching.value = false
         }
-
-
-
-
     };
 
     return {
