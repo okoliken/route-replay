@@ -3,13 +3,15 @@ import Play from './player-icons/play.vue'
 import Prev from './player-icons/prev.vue'
 import Next from './player-icons/next.vue'
 import { handleTrip } from "../composables/trip";
-const { selectVehicle, hasAVehicleBeenSelected, moveCar } = handleTrip();
+const { selectedVehicle, hasAVehicleBeenSelected, moveCar, stopCar, replayState } = handleTrip();
 </script>
 <template>
   <div class="route-replay w-full max-w-4xl">
     <div class="flex items-center justify-between">
       <div>
-        <h4 v-if="hasAVehicleBeenSelected" class="text-[#09090F] text-[16px]">Journey of LND-123DE</h4>
+        <h4 v-if="hasAVehicleBeenSelected" class="text-[#09090F] text-[16px]">Journey of
+          {{ selectedVehicle?.vehicle?.registration_number
+          }}</h4>
         <h4 v-else class="text-[#09090F] text-[16px]">No vehicle selected</h4>
         <div class="flex gap-x-1">
           <span class="block text-[#6E717C] text-[14px]">--</span>
@@ -20,7 +22,8 @@ const { selectVehicle, hasAVehicleBeenSelected, moveCar } = handleTrip();
       <div class="flex items-center gap-x-5 transform translate-y-px">
         <div class="flex items-center gap-x-4">
           <Prev class="cursor-pointer" />
-          <Play @click="moveCar" class="cursor-pointer" />
+          <Play v-if="!replayState" @click="moveCar" class="cursor-pointer" />
+          <i @click="stopCar" v-if="replayState" class="ri-pause-circle-fill text-[32px] cursor-pointer"></i>
           <Next class="cursor-pointer" />
         </div>
         <p class="text-textDarkGrey">0:01/1:06:00</p>

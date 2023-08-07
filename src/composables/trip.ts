@@ -5,6 +5,7 @@ import { useGeolocation as location } from "../composables/location";
 const startingPoint = ref(0)
 const currentPosition = ref({ lat: 6.5765376, lng: 3.3521664 })
 const re = ref()
+const replayState = ref(false)
 const interval = ref<number | any>(null)
 // logic to get vehicle and plot the polyline path on the map
 const selectedVehicle = ref<{ [x: string]: any }>({})
@@ -23,8 +24,6 @@ const geometry = computed(() => {
     
         currentPosition.value = mappedItem;
     }
-
-   
 
     return re.value?.map((obj: any) => ({
         lat: obj.y,
@@ -62,18 +61,21 @@ const firstCoordinates = computed({
 })
 
 const moveCar = () => {
+    replayState.value = true
     interval.value =  setInterval(()=> {
         if(startingPoint.value <= geometry.value?.length){
             firstCoordinates.value = startingPoint.value++
         }
         else {
             stopCar()
+            replayState.value =  false
         }
     }, 500)
     
 }
 
 const stopCar = () => {
+    replayState.value =  false
     clearInterval(interval.value)
 }
 // 
@@ -92,6 +94,8 @@ export const handleTrip = () => {
         routePath,
         hasAVehicleBeenSelected,
         firstCoordinates,
-        moveCar
+        moveCar,
+        stopCar,
+        replayState
     }
 }
