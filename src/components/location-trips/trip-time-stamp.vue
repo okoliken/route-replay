@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 
-// import GreenVue from '../stamp-icons/green.vue'
 const text = ref('Trip timestamp')
 const stampIsOpen = ref(false)
 
