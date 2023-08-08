@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-interface Props {
-  trips: { [x: string]: any }
-}
+import { type Props } from '../types'
 
 const { trips } = defineProps<Props>()
 
@@ -11,11 +9,13 @@ const { trips } = defineProps<Props>()
   <div class="route-cars p-[16px] w-[300px] flex items-center gap-x-4 transition-shadow">
     <img class="border border-[#EFF2F7] rounded-[12px]" src="../assets/car.png" alt="">
     <div>
-      <p class="text-[16px] text-shuttlersDark font-bold hover:underline hover:cursor-pointer">{{ trips?.vehicle?.registration_number }}</p>
-      <span class="text-textDarkGrey mt-1 inline-block">{{trips?.driver?.fname}} {{trips?.driver?.lname}}</span>
+      <p class="text-[16px] text-shuttlersDark font-bold hover:underline hover:cursor-pointer">{{
+        trips?.vehicle?.registration_number }}</p>
+      <span class="text-textDarkGrey mt-1 inline-block">{{ trips?.driver?.fname }} {{ trips?.driver?.lname }}</span>
     </div>
     <span
-      class="bg-shuttlersPurple py-[8px] px-[8px] rounded-[16px] text-white font-bold text-[12px] h-[33px] transform -translate-y-3">{{ trips.vehicle?.brand }}</span>
+      class="bg-shuttlersPurple py-[8px] px-[8px] rounded-[16px] text-white font-bold text-[12px] h-[33px] transform -translate-y-3">{{
+        trips.vehicle?.brand }}</span>
   </div>
 </template>
 

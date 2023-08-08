@@ -2,16 +2,12 @@
 import { ref } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 
-
+import { type trip } from '../../types'
 const dropDown = ref(null)
 const text = ref('All vehicle trips')
 const stampIsOpen = ref(false)
 
-interface trip {
-  text:string,
-  date:string,
-  timeStamp:string,
-}
+
 const timeJourney = ref<trip []>([
   {
     text: 'Trip on IYJ95',

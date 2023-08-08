@@ -11,13 +11,13 @@ import RouteCars from "./components/route-cars.vue";
 import Loader from "./components/form-elements/Loader.vue";
 import { onMounted, ref } from "vue";
 import { handleTrip } from "./composables/trip";
-import { GoogleMap, Marker, Polyline } from "vue3-google-map";
+import { GoogleMap, Marker, Polyline, InfoWindow } from "vue3-google-map";
 import { useFilters } from "./composables/filters";
 import { useAuth } from "./composables/auth";
 
 const { searchResult, searching } = useFilters();
 const { handleAuthorization, authenticating } = useAuth();
-const { selectVehicle, routePath, hasAVehicleBeenSelected, firstCoordinates } = handleTrip();
+const { selectVehicle, routePath, hasAVehicleBeenSelected, coordinates, selectedVehicle } = handleTrip();
 const apiKey = ref('AIzaSyCBguFgxPOH6AuAiz0ZXXoo_fJAp4AR8WE')
 onMounted(async () => {
   if (!sessionStorage.getItem("tripAccessToken")) {
@@ -58,12 +58,46 @@ onMounted(async () => {
     </div>
     <div class="absolute top-0 left-0 right-0 bottom-0 w-full z-0">
       <GoogleMap :api-key="apiKey" style="width: 100%; height: 100vh"
-        :center="{ lat: firstCoordinates?.lat, lng: firstCoordinates?.lng }" :zoom="15">
-        <Marker  v-if="hasAVehicleBeenSelected" :options="{
-          position: { lat: firstCoordinates?.lat, lng: firstCoordinates?.lng },
+        :center="{ lat: coordinates?.lat, lng: coordinates?.lng }" :zoom="15">
+        <Marker v-if="hasAVehicleBeenSelected" :options="{
+          position: { lat: coordinates?.lat, lng: coordinates?.lng },
           icon: './src/assets/bus.png',
-          animation:'DROP'
-        }" />
+          animation: 'drop'
+        }">
+          <InfoWindow style="padding: 0%; !important">
+            <div class="py-3">
+              <div class="flex items-center gap-x-3">
+                <img class="border border-[#EFF2F7] rounded-[12px] w-[36px]" src="./assets/car.png" alt="">
+                <div>
+                  <p class="text-[#09090F] font-light leading-[20px]">{{ selectedVehicle?.driver?.fname }}
+                    {{ selectedVehicle?.driver?.lname }}</p>
+                  <span class="font-bold">{{selectedVehicle?.vehicle?.registration_number}}</span>
+                </div>
+              </div>
+
+              <div class="mt-4">
+                <p class="text-[#09090F] font-light leading-[20px]">Vehicle arrival time</p>
+                <span class="font-bold">5:10 PM</span>
+              </div>
+              <div class="mt-4">
+                <p class="text-[#09090F] font-light leading-[20px]">Passengers picked up</p>
+                <span class="font-bold">{{ selectedVehicle?.passengers_count }}</span>
+              </div>
+              <div class="mt-4">
+                <p class="text-[#09090F] font-light leading-[20px]">Vehicle departure time</p>
+                <span class="font-bold">5:15 PM</span>
+              </div>
+              <div class="mt-4">
+                <p class="text-[#09090F] font-light leading-[20px]">Passengers dropped off</p>
+                <span class="font-bold">0</span>
+              </div>
+              <div class="mt-4">
+                <p class="text-[#09090F] font-light leading-[20px]">Next stop</p>
+                <span class="font-bold">Ijegbe Bus stop</span>
+              </div>
+            </div>
+          </InfoWindow>
+        </Marker>
 
         <Polyline :options="routePath" />
       </GoogleMap>
@@ -72,11 +106,11 @@ onMounted(async () => {
       class="fixed bottom-40 flex items-start justify-start w-full overflow-y-hidden overflow-x-scroll gap-x-4 routes p-8 z-0">
       <template v-if="searching">
         <div v-for="i in 7" :key="i"
-          class="w-[1200px] bg-gray-200 px-[106px] py-[44px] rounded-[16px] animate-pluse transition-all duration-150">
+          class="w-[1200px] bg-gray-200 px-[106px] py-[44px] rounded-[16px] animate-pluse  cursor-wait">
         </div>
       </template>
-      <RouteCars @click="selectVehicle(trips)" v-else-if="!hasAVehicleBeenSelected" v-for="(trips, index) in searchResult" :trips="trips" :key="index"
-        class="flex-x" />
+      <RouteCars @click="selectVehicle(trips)" v-else-if="!hasAVehicleBeenSelected" v-for="(trips, index) in searchResult"
+        :trips="trips" :key="index" class="flex-x" />
     </div>
 
     <div class="fixed bottom-8 flex items-center justify-center w-full">
@@ -95,6 +129,7 @@ onMounted(async () => {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
 
 .flex-x {
   flex: 0 0 auto;

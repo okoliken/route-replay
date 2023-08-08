@@ -10,6 +10,7 @@ const {
   stopCar,
   replayState,
   increaseSpeed,
+  progressValue
 } = handleTrip();
 </script>
 <template>
@@ -45,7 +46,7 @@ const {
           ></i>
           <Next class="cursor-pointer" />
         </div>
-        <!-- <p class="text-textDarkGrey">0:01/1:06:00</p> -->
+        <p class="text-textDarkGrey">0:01/1:06:00</p>
       </div>
 
       <div class="flex items-center gap-x-3 transform translate-y-px">
@@ -53,7 +54,7 @@ const {
           :class="[
             !hasAVehicleBeenSelected ? 'cursor-not-allowed' : 'cursor-pointer',
           ]"
-          @click="!hasAVehicleBeenSelected ? null : increaseSpeed(1)"
+          @click="!hasAVehicleBeenSelected ? null : increaseSpeed(1000)"
           class="transition-all bg-[#E6FFF2] py-[6px] px-[12px] rounded-[8px] hover:bg-[#0DAC5C] hover:bg-opacity-30"
         >
           <span class="inline-block text-shuttlersGreen">1x</span>
@@ -62,7 +63,7 @@ const {
           :class="[
             !hasAVehicleBeenSelected ? 'cursor-not-allowed' : 'cursor-pointer',
           ]"
-          @click="!hasAVehicleBeenSelected ? null : increaseSpeed(5)"
+          @click="!hasAVehicleBeenSelected ? null : increaseSpeed(500)"
           class="transition-all bg-[#E6FFF2] py-[6px] px-[12px] rounded-[8px] hover:bg-[#0DAC5C] hover:bg-opacity-30"
         >
           <span class="inline-block text-shuttlersGreen">5x</span>
@@ -71,7 +72,7 @@ const {
           :class="[
             !hasAVehicleBeenSelected ? 'cursor-not-allowed' : 'cursor-pointer',
           ]"
-          @click="!hasAVehicleBeenSelected ? null :increaseSpeed(10)"
+          @click="!hasAVehicleBeenSelected ? null : increaseSpeed(250)"
           class="transition-all bg-[#E6FFF2] py-[6px] px-[12px] rounded-[8px] hover:bg-[#0DAC5C] hover:bg-opacity-30"
         >
           <span class="inline-block text-shuttlersGreen">10x</span>
@@ -85,7 +86,7 @@ const {
       <div
         :class="[hasAVehicleBeenSelected ? 'bg-[#0DAC5C]' : 'bg-[#B9BCC8]']"
         class="h-[8px] rounded-full transition-all duration-150 ease-linear"
-        style="width: 1%"
+        :style="`width: ${progressValue}%`"
       ></div>
     </div>
   </div>
