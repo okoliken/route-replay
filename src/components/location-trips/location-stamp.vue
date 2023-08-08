@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Red from '../stamp-icons/red.vue'
 // @ts-ignore
-import Green from '../stamp-icons/Green.vue'
+import Green from '../stamp-icons/green.vue'
 interface Props {
   text: string
   stampType: string
