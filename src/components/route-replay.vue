@@ -10,7 +10,9 @@ const {
   stopCar,
   replayState,
   increaseSpeed,
-  progressValue
+  progressValue,
+  decreaseSpeedByTen,
+  increaseSpeedByTen,
 } = handleTrip();
 </script>
 <template>
@@ -29,7 +31,14 @@ const {
 
       <div class="flex items-center gap-x-5 transform translate-y-px">
         <div class="flex items-center gap-x-4">
-          <Prev class="cursor-pointer" />
+          <Prev
+            :class="[
+              !hasAVehicleBeenSelected
+                ? 'cursor-not-allowed'
+                : 'cursor-pointer',
+            ]"
+            @click="!hasAVehicleBeenSelected ? null : decreaseSpeedByTen(10)"
+          />
           <Play
             v-if="!replayState"
             @click="!hasAVehicleBeenSelected ? null : moveCar()"
@@ -44,9 +53,16 @@ const {
             v-if="replayState"
             class="ri-pause-circle-fill text-[32px] cursor-pointer"
           ></i>
-          <Next class="cursor-pointer" />
+          <Next
+            :class="[
+              !hasAVehicleBeenSelected
+                ? 'cursor-not-allowed'
+                : 'cursor-pointer',
+            ]"
+            @click="!hasAVehicleBeenSelected ? null : increaseSpeedByTen(10)"
+          />
         </div>
-        <p class="text-textDarkGrey">0:01/1:06:00</p>
+        <!-- <p class="text-textDarkGrey">0:01/1:06:00</p> -->
       </div>
 
       <div class="flex items-center gap-x-3 transform translate-y-px">

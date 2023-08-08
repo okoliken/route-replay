@@ -1,19 +1,20 @@
 import { ref, computed } from "vue";
 
-// your current location
+
 const startingPoint = ref(0);
 const currentPosition = ref({ lat: 6.5765376, lng: 3.3521664 });
 const route = ref();
 const replayState = ref(false);
 const interval = ref<number | any>(null);
 const speed = ref(1000);
-const currentTime = ref(0)
-const progressValue = ref(0)
-
+const progressValue = ref(0);
 const selectedVehicle = ref<{ [x: string]: any }>({});
+
+
 const hasAVehicleBeenSelected = computed(() => {
   return Object.entries(selectedVehicle.value).length;
 });
+
 const geometry_path = computed(() => {
   route.value = selectedVehicle.value?.route?.geometry?.reverse();
   if (route.value?.length) {
@@ -49,34 +50,29 @@ const coordinates = computed({
     if (route.value?.length) {
       const firstItem = route.value[index];
 
-     return currentPosition.value = {
+      return (currentPosition.value = {
         lat: firstItem.y,
         lng: firstItem.x,
-      };
+      });
     } else return (currentPosition.value = { lat: 6.5765376, lng: 3.3521664 });
   },
 });
+
+
 
 const moveCar = () => {
   replayState.value = true;
   interval.value = setInterval(() => {
     if (startingPoint.value <= geometry_path.value?.length) {
-       coordinates.value = startingPoint.value++;
-       progressValue.value += (geometry_path.value?.length / 100)
-      // console.log('Time to wait is:', t)
-      // if(currentTime.value % getSecondsToWait.value === 0){
-      //   progressValue.value += getSecondsToWait.value 
-      //   // console.log('current time is:',progressValue.value)
-      //   // console.log('Time to wait is:', getSecondsToWait.value)
-      // }
-
-
+      coordinates.value = startingPoint.value++;
     } else {
       stopCar();
-      selectedVehicle.value = {}
+      selectedVehicle.value = {};
       replayState.value = false;
+      startingPoint.value = 0;
+      speed.value = 1000;
     }
-  }, getSecondsToWait.value);
+  }, speed.value);
 };
 
 const stopCar = () => {
@@ -84,24 +80,29 @@ const stopCar = () => {
   clearInterval(interval.value);
 };
 
-const increaseSpeed =  (value: number) => {
-  speed.value = value;
-   stopCar();
-   moveCar();
+const stopAndStartInterval = () => {
+  stopCar();
+  moveCar();
 };
 
-const getSecondsToWait = computed(() => {
-  const time = Math.round(selectedVehicle.value?.route?.duration_value / geometry_path.value?.length)
-  return time
- }) 
-//
+const increaseSpeed = (value: number) => {
+  speed.value = value;
+  stopAndStartInterval();
+};
+
+const decreaseSpeedByTen = (value: number) => {
+  speed.value -= value;
+  stopAndStartInterval();
+};
+const increaseSpeedByTen = (value: number) => {
+  speed.value += value;
+  stopAndStartInterval();
+};
 
 export const handleTrip = () => {
-
-
-   const selectVehicle = (vehicle: { [x: string]: any }) => {
+  const selectVehicle = (vehicle: { [x: string]: any }) => {
     selectedVehicle.value = vehicle;
-        console.log(selectedVehicle.value)
+    console.log(selectedVehicle.value);
   };
 
   return {
@@ -114,6 +115,8 @@ export const handleTrip = () => {
     stopCar,
     replayState,
     increaseSpeed,
-    progressValue
+    progressValue,
+    decreaseSpeedByTen,
+    increaseSpeedByTen,
   };
 };

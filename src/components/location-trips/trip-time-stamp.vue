@@ -6,36 +6,36 @@ const text = ref('Trip timestamp')
 const stampIsOpen = ref(false)
 
 const timeJourney = reactive([
-  {
-    text: 'Trip start',
-    active: true,
-    timeStamp: '2:00'
-  },
-  {
-    text: 'Egebeda stop',
-    active: false,
-    timeStamp: '2:00'
-  },
-  {
-    text: 'Iyana Ipaja stop',
-    active: false,
-    timeStamp: '2:00'
-  },
-  {
-    text: 'Bonny Camp stop',
-    active: false,
-    timeStamp: '2:00'
-  },
-  {
-    text: 'Lekki Phase 1 stop',
-    active: false,
-    timeStamp: '2:00'
-  },
-  {
-    text: 'Jasper Ike street',
-    active: false,
-    timeStamp: '2:00'
-  }
+  // {
+  //   text: 'Trip start',
+  //   active: true,
+  //   timeStamp: '2:00'
+  // },
+  // {
+  //   text: 'Egebeda stop',
+  //   active: false,
+  //   timeStamp: '2:00'
+  // },
+  // {
+  //   text: 'Iyana Ipaja stop',
+  //   active: false,
+  //   timeStamp: '2:00'
+  // },
+  // {
+  //   text: 'Bonny Camp stop',
+  //   active: false,
+  //   timeStamp: '2:00'
+  // },
+  // {
+  //   text: 'Lekki Phase 1 stop',
+  //   active: false,
+  //   timeStamp: '2:00'
+  // },
+  // {
+  //   text: 'Jasper Ike street',
+  //   active: false,
+  //   timeStamp: '2:00'
+  // }
 ])
 </script>
 
