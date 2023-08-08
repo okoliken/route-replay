@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 
-import GreenVue from '../stamp-icons/green.vue'
+// import GreenVue from '../stamp-icons/green.vue'
 const text = ref('Trip timestamp')
 const stampIsOpen = ref(false)
 
@@ -55,7 +55,7 @@ const timeJourney = reactive([
       v-if="stampIsOpen"
       class="time-stamp-log py-[20px] px-[16px] mt-3 animate__animated animate__fadeIn relative z-[99999]"
     >
-      <div v-for="(stamps, index) in timeJourney" :key="index">
+      <!-- <div v-for="(stamps, index) in timeJourney" :key="index">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-x-2">
             <GreenVue :class="{ 'grayscale-element': !stamps.active }" />
@@ -72,7 +72,7 @@ const timeJourney = reactive([
           <div class="w-[2px] h-[8px] mb-1 rounded-[8px] bg-[#D3DCE6] p-px"></div>
           <div class="w-[2px] h-[5px] mb-1 rounded-[8px] bg-[#D3DCE6] p-px"></div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
