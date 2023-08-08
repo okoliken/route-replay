@@ -11,6 +11,7 @@ import RouteCars from "./components/route-cars.vue";
 import Loader from "./components/form-elements/Loader.vue";
 import { onMounted, ref } from "vue";
 import { handleTrip } from "./composables/trip";
+// @ts-ignore
 import { GoogleMap, Marker, Polyline, InfoWindow } from "vue3-google-map";
 import { useFilters } from "./composables/filters";
 import { useAuth } from "./composables/auth";

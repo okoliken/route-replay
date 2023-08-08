@@ -22,9 +22,7 @@
     "notivue": "^1.1.4",
     "remixicon": "^3.5.0",
     "vue": "^3.3.4",
-    "vue-mapbox-ts": "^0.9.8",
     "vue-select": "^4.0.0-beta.6",
-    "vue3-geolocation": "^1.0.0",
     "vue3-google-map": "^0.15.0"
   },
   "devDependencies": {
