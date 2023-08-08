@@ -15,11 +15,17 @@ import { handleTrip } from "./composables/trip";
 import { GoogleMap, Marker, Polyline, InfoWindow } from "vue3-google-map";
 import { useFilters } from "./composables/filters";
 import { useAuth } from "./composables/auth";
-
+import { useDateFormat } from '@vueuse/core'
 const { searchResult, searching } = useFilters();
 const { handleAuthorization, authenticating } = useAuth();
 const { selectVehicle, routePath, hasAVehicleBeenSelected, coordinates, selectedVehicle } = handleTrip();
 const apiKey = ref('AIzaSyCBguFgxPOH6AuAiz0ZXXoo_fJAp4AR8WE')
+
+const customMeridiem = (hours: number, minutes: number, isLowercase?: boolean, hasPeriod?: boolean) => {
+  const m = hours > 11 ? (isLowercase ? 'pm' : 'pm') : (isLowercase ? 'am' : 'am')
+  return hasPeriod ? m.split('').reduce((acc, current) => acc += `${current}.`, '') : m
+}
+
 onMounted(async () => {
   if (!sessionStorage.getItem("tripAccessToken")) {
     await handleAuthorization();
@@ -76,9 +82,9 @@ onMounted(async () => {
                 </div>
               </div>
 
-              <div class="mt-4">
+              <div class="mt-5">
                 <p class="text-[#09090F] font-light leading-[20px]">Vehicle arrival time</p>
-                <span class="font-bold">5:10 PM</span>
+                <span class="font-bold">{{ useDateFormat(selectedVehicle?.end_trip, 'hh:mm aa (ddd)', { customMeridiem }).value}}</span>
               </div>
               <div class="mt-4">
                 <p class="text-[#09090F] font-light leading-[20px]">Passengers picked up</p>
@@ -86,16 +92,16 @@ onMounted(async () => {
               </div>
               <div class="mt-4">
                 <p class="text-[#09090F] font-light leading-[20px]">Vehicle departure time</p>
-                <span class="font-bold">5:15 PM</span>
+                <span class="font-bold">{{useDateFormat(selectedVehicle?.start_trip, 'hh:mm aa (ddd)', { customMeridiem }).value}}</span>
               </div>
-              <div class="mt-4">
+              <!-- <div class="mt-4">
                 <p class="text-[#09090F] font-light leading-[20px]">Passengers dropped off</p>
                 <span class="font-bold">0</span>
-              </div>
-              <div class="mt-4">
+              </div> -->
+              <!-- <div class="mt-4">
                 <p class="text-[#09090F] font-light leading-[20px]">Next stop</p>
                 <span class="font-bold">Ijegbe Bus stop</span>
-              </div>
+              </div> -->
             </div>
           </InfoWindow>
         </Marker>
