@@ -1,14 +1,15 @@
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 
 
 const startingPoint = ref(0);
-const currentPosition = ref({ lat: 6.5765376, lng: 3.3521664 });
+const currentPosition = ref({ lat: 6.5765376, lng: 3.3521664, dir: 0 });
 const route = ref();
 const replayState = ref(false);
 const interval = ref<number | any>(null);
 const speed = ref(1000);
 const progressValue = ref(0);
-const selectedVehicle = ref<{ [x: string]: any }>({});
+const selectedVehicle = ref<{ [x: string]: any }>([]);
+const positionDirection = ref<HTMLElement | null>(null)
 
 
 const hasAVehicleBeenSelected = computed(() => {
@@ -16,19 +17,20 @@ const hasAVehicleBeenSelected = computed(() => {
 });
 
 const geometry_path = computed(() => {
-  route.value = selectedVehicle.value?.route?.geometry;
+  route.value = selectedVehicle.value?.reverse();
   if (route.value?.length) {
     const firstItem = route.value[0];
 
     currentPosition.value = {
-      lat: firstItem.y,
-      lng: firstItem.x,
+      lat: firstItem.position_latitude,
+      lng: firstItem.position_longitude,
+      dir: firstItem.position_direction
     };
   }
 
   return route.value?.map((obj: any) => ({
-    lat: obj.y,
-    lng: obj.x,
+    lat: obj.position_latitude,
+    lng: obj.position_longitude,
   }));
 });
 
@@ -51,10 +53,11 @@ const coordinates = computed({
       const firstItem = route.value[index];
 
       return (currentPosition.value = {
-        lat: firstItem.y,
-        lng: firstItem.x,
+        lat: firstItem.position_latitude,
+        lng: firstItem.position_longitude,
+        dir: firstItem.position_direction 
       });
-    } else return (currentPosition.value = { lat: 6.5765376, lng: 3.3521664 });
+    } else return (currentPosition.value = { lat: 6.5765376, lng: 3.3521664, dir:0 });
   },
 });
 
@@ -99,10 +102,11 @@ const increaseSpeedByTen = (value: number) => {
   stopAndStartInterval();
 };
 
+
+
 export const handleTrip = () => {
   const selectVehicle = (vehicle: { [x: string]: any }) => {
     selectedVehicle.value = vehicle;
-    console.log(selectedVehicle.value);
   };
 
   return {
@@ -118,5 +122,6 @@ export const handleTrip = () => {
     progressValue,
     decreaseSpeedByTen,
     increaseSpeedByTen,
+    positionDirection
   };
 };

@@ -1,7 +1,11 @@
 import tripCall, { type reqMethod } from "../axios";
 import { ref, computed, isProxy, toRaw } from "vue";
 import { useDateFormat } from "@vueuse/core";
+
+import { useToast } from "vue-toastification";
+
 import { type Result } from '../types'
+import  {handleTrip} from './trip'
 
 const searchResult = ref<Result[]>([]);
 const route = ref("");
@@ -9,6 +13,17 @@ const searchQuery = ref("");
 const searchRoute = ref("");
 const date = ref("");
 const searching = ref(false)
+const vehicle = ref([])
+
+const _toast = useToast();
+
+const vehicle_names = computed(() => {
+    return vehicle.value.filter((cars:any) => cars?.name)
+})
+
+const { selectedVehicle } = handleTrip()
+
+
 export const useFilters = () => {
     const splitDateFromTo = computed(() => {
         if (date.value && isProxy(date.value)) {
@@ -22,10 +37,10 @@ export const useFilters = () => {
         return;
     });
 
-    const handleSearch = async (q: string) => {
+    const handleSearch = async (id: string) => {
         const reqMthd: reqMethod = "get";
         const params = {
-            endpoint: `v1/trips/completed?limit=10&page=1&metadata=true&sort[start_trip]=desc&related=vehicle,route,driver&search=${q}&from=${splitDateFromTo.value?.from}&to=${splitDateFromTo.value?.to}`,
+            endpoint: `api/v1/vehicles/${id}/positions?page=1&size=500000&startDate=${splitDateFromTo.value?.from}&endDate=${splitDateFromTo.value?.to}`,
             method: reqMthd,
             returnPromise: true,
         };
@@ -33,12 +48,39 @@ export const useFilters = () => {
             searching.value = true
             const response_val = await tripCall(params);
 
-            searchResult.value = response_val.data?.data;
+            if(response_val.data?.data?.length) {
+                selectedVehicle.value = response_val.data?.data;
+            }   
+            
+            else  _toast.success('No Path Found')
+           
+            // console.log(selectedVehicle.value)
+            searching.value = false
+        } catch (error) {
+            searching.value = false
+        }
+        // 
+    };
+    const fetchVehicle = async () => {
+        const reqMthd: reqMethod = "get";
+        const params = {
+            endpoint: `vehicles`,
+            method: reqMthd,
+            returnPromise: true,
+        };
+        try {
+            searching.value = true
+            const response_val = await tripCall(params);
+
+            
+            vehicle.value = response_val.data
             searching.value = false
         } catch (error) {
             searching.value = false
         }
     };
+
+   
 
     return {
         handleSearch,
@@ -47,6 +89,8 @@ export const useFilters = () => {
         searchQuery,
         route,
         searching,
-        searchRoute
+        searchRoute,
+        fetchVehicle,
+        vehicle_names
     };
 };

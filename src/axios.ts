@@ -2,7 +2,7 @@ import axios,{ type AxiosInstance} from 'axios'
 
 
 export const USER_TAG = 'tripAccessToken'
-export const baseUrl = 'https://api.test.shuttlers.africa'
+export const baseUrl = 'https://telemetry.shuttlers.ng'
 
 export type reqMethod = 'post' | 'get' | 'delete' | 'put';
 type body = { [x: string]: any }
