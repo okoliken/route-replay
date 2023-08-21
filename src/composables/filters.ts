@@ -5,8 +5,9 @@ import { useDateFormat } from "@vueuse/core";
 import { useToast } from "vue-toastification";
 
 import { type Result } from '../types'
-import  {handleTrip} from './trip'
-
+import { handleTrip } from './trip'
+const { selectedVehicle } = handleTrip()
+// VARIABLES 
 const searchResult = ref<Result[]>([]);
 const route = ref("");
 const searchQuery = ref("");
@@ -14,17 +15,22 @@ const searchRoute = ref("");
 const date = ref("");
 const searching = ref(false)
 const vehicle = ref([])
-
 const _toast = useToast();
+// END
 
+
+
+// filter out vehicle names from api
 const vehicle_names = computed(() => {
-    return vehicle.value.filter((cars:any) => cars?.name)
+    return vehicle.value.filter((cars: any) => cars?.name)
 })
+// End
 
-const { selectedVehicle } = handleTrip()
+
 
 
 export const useFilters = () => {
+    // date format
     const splitDateFromTo = computed(() => {
         if (date.value && isProxy(date.value)) {
             const newDate = toRaw(date.value);
@@ -36,7 +42,9 @@ export const useFilters = () => {
         }
         return;
     });
+    // End
 
+    // handle search by Id
     const handleSearch = async (id: string) => {
         const reqMthd: reqMethod = "get";
         const params = {
@@ -48,19 +56,19 @@ export const useFilters = () => {
             searching.value = true
             const response_val = await tripCall(params);
 
-            if(response_val.data?.data?.length) {
+            if (response_val.data?.data?.length) {
                 selectedVehicle.value = response_val.data?.data;
-            }   
-            
-            else  _toast.success('No Path Found')
-           
-            // console.log(selectedVehicle.value)
+            }
+            else _toast.success('No Path Found')
             searching.value = false
         } catch (error) {
             searching.value = false
         }
-        // 
+
     };
+    // END
+
+    // Fetch vehicles
     const fetchVehicle = async () => {
         const reqMthd: reqMethod = "get";
         const params = {
@@ -72,7 +80,6 @@ export const useFilters = () => {
             searching.value = true
             const response_val = await tripCall(params);
 
-            
             vehicle.value = response_val.data
             searching.value = false
         } catch (error) {
@@ -80,7 +87,7 @@ export const useFilters = () => {
         }
     };
 
-   
+    // END
 
     return {
         handleSearch,

@@ -86,6 +86,7 @@ onMounted(async () => {
         >
           <div style="text-align: center">
             <img
+              v-show="hasAVehicleBeenSelected"
               ref="positionDirection"
               :style="`transform:rotate(${coordinates.dir}deg)`"
               src="../src/assets/bus.png"
