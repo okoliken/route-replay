@@ -20,7 +20,8 @@ const hasAVehicleBeenSelected = computed(() => {
 
 
 const geometry_path = computed(() => {
-  route.value = selectedVehicle.value?.reverse();
+  if(selectedVehicle.value?.length) route.value = selectedVehicle.value?.reverse();
+  
   if (route.value?.length) {
     const firstItem = route.value[0];
 
