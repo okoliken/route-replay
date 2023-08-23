@@ -21,7 +21,7 @@ const _toast = useToast();
 
 
 // filter out vehicle names from api
-const vehicle_names = computed(() => {
+const vehicle_names = computed<{[x:string]: any}>(() => {
     return vehicle.value.filter((cars: any) => cars?.name)
 })
 // End

@@ -7,14 +7,14 @@ const  { handleSearch, searchRoute, vehicle_names } =  useFilters()
 const filterByRoute = ref(false)
 
 const names = computed(() => {
-   return vehicle_names.value.map((items) => (
+   return vehicle_names.value.map((items:any) => (
      items?.name
    ))
 })
 
-const vehicleId = computed(() => {
-  return vehicle_names.value.filter((items) => (
-    items.name === searchRoute.value
+const vehicleId = computed<{[x:string]: any}>(() => {
+  return vehicle_names.value.filter((items:any) => (
+    items?.name === searchRoute.value
   ))
 })
 
@@ -30,20 +30,6 @@ watchDebounced(
    },
   { debounce: 700, maxWait: 5000 },
 )
-
-
-const routes  = [
-  'Ketu',
-  'Ikeja',
-  'Ikorodu',
-  'Lekki',
-  'Oshodi',
-  'Anthony',
-  'Palmgrove',
-  'CMS',
-  'Marina',
-  'Ojota',
-]
 </script>
 
 <template>

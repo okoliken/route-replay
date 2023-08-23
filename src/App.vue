@@ -12,14 +12,10 @@ import Loader from "./components/form-elements/Loader.vue";
 import { onMounted, ref } from "vue";
 import { handleTrip } from "./composables/trip";
 // @ts-ignore
-import {
-  GoogleMap,
-  Polyline,
-  CustomMarker,
-} from "vue3-google-map";
+import { GoogleMap, Polyline, CustomMarker } from 'vue3-google-map';
 import { useFilters } from "./composables/filters";
-import { useAuth } from "./composables/auth";
-import { useDateFormat } from "@vueuse/core";
+// import { useAuth } from "./composables/auth";
+// import { useDateFormat } from "@vueuse/core";
 const { searchResult, searching, fetchVehicle } = useFilters();
 // const { handleAuthorization, authenticating,  } = useAuth();
 const {
@@ -79,7 +75,6 @@ onMounted(async () => {
         :zoom="15"
       >
         <CustomMarker
-         
           :options="{
             position: { lat: coordinates?.lat, lng: coordinates?.lng },
           }"
