@@ -40,7 +40,10 @@ export const useFilters = () => {
                 to: useDateFormat(newDate[1], "YYYY-MM-DD").value,
             };
         }
-        return;
+        return {
+            from:'',
+            to:''
+        };
     });
     // End
 

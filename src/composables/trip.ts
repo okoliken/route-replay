@@ -1,16 +1,19 @@
-import { ref, computed, onMounted } from "vue";
-
+import { ref, computed } from "vue";
+import { useToast } from "vue-toastification";
 // VARIABLES
 const startingPoint = ref(0);
 const currentPosition = ref({ lat: 6.5765376, lng: 3.3521664, dir: 0 });
 const route = ref();
 const replayState = ref(false);
 const interval = ref<number | any>(null);
-const speed = ref(1000);
+const speed = ref(500);
 const progressValue = ref(0);
 const selectedVehicle = ref<{ [x: string]: any }>([]);
 const positionDirection = ref<HTMLElement | null>(null)
 // END
+
+
+const _toast = useToast()
 
 // CHECKS IF VEHICLES HAVE BEEN FETCHED
 const hasAVehicleBeenSelected = computed(() => {
@@ -104,6 +107,7 @@ const stopAndStartInterval = () => {
 const increaseSpeed = (value: number) => {
   speed.value = value;
   stopAndStartInterval();
+  _toast.success(`speed increased by ${value}`)
 };
 
 

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import Header from "./components/Header.vue";
-import Search from "./components/form-elements/Search.vue";
+// import Search from "./components/form-elements/Search.vue";
 import SelectRoute from "./components/form-elements/SelectRoute.vue";
 import SelectDateRange from "./components/form-elements/SelectDateRange.vue";
-import LocationStamp from "./components/location-trips/location-stamp.vue";
-import TripTimeStamp from "./components/location-trips/trip-time-stamp.vue";
-import VehicleTrip from "./components/location-trips/vehicle-trip.vue";
+// import LocationStamp from "./components/location-trips/location-stamp.vue";
+// import TripTimeStamp from "./components/location-trips/trip-time-stamp.vue";
+// import VehicleTrip from "./components/location-trips/vehicle-trip.vue";
 import RouteReplay from "./components/route-replay.vue";
 // import RouteCars from "./components/route-cars.vue";
 import Loader from "./components/form-elements/Loader.vue";
@@ -16,19 +16,15 @@ import { GoogleMap, Polyline, CustomMarker } from 'vue3-google-map';
 import { useFilters } from "./composables/filters";
 // import { useAuth } from "./composables/auth";
 // import { useDateFormat } from "@vueuse/core";
-const { searchResult, searching, fetchVehicle } = useFilters();
+const {  searching, fetchVehicle } = useFilters();
 // const { handleAuthorization, authenticating,  } = useAuth();
 const {
-  selectVehicle,
   routePath,
   hasAVehicleBeenSelected,
   coordinates,
-  selectedVehicle,
   positionDirection,
 } = handleTrip();
 const apiKey = ref("AIzaSyCBguFgxPOH6AuAiz0ZXXoo_fJAp4AR8WE");
-const marker = ref();
-
 onMounted(async () => {
   // if (!sessionStorage.getItem("tripAccessToken")) {
   //   await handleAuthorization();
@@ -48,23 +44,23 @@ onMounted(async () => {
         <SelectRoute />
       </div>
       <div class="col-span-6">
-        <Search />
+        <!-- <Search /> -->
       </div>
       <div class="col-span-3">
-        <SelectDateRange />
+        <!-- <SelectDateRange /> -->
       </div>
 
       <div class="col-span-2">
-        <LocationStamp stampType="red" text="Pickup location" />
+        <!-- <LocationStamp stampType="red" text="Pickup location" /> -->
       </div>
       <div class="col-span-2">
-        <LocationStamp stampType="green" text="Drop off location" />
+        <!-- <LocationStamp stampType="green" text="Drop off location" /> -->
       </div>
       <div class="col-span-3">
-        <TripTimeStamp />
+        <!-- <TripTimeStamp /> -->
       </div>
       <div class="mt-1 col-span-5 flex justify-end">
-        <VehicleTrip />
+        <!-- <VehicleTrip /> -->
       </div>
     </div>
     <div class="absolute top-0 left-0 right-0 bottom-0 w-full z-0">

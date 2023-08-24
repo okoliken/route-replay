@@ -3,6 +3,8 @@ import Play from "./player-icons/play.vue";
 import Prev from "./player-icons/prev.vue";
 import Next from "./player-icons/next.vue";
 import { handleTrip } from "../composables/trip";
+import { useFilters } from '../composables/filters'
+import {ref} from 'vue'
 const {
   selectedVehicle,
   hasAVehicleBeenSelected,
@@ -14,13 +16,15 @@ const {
   decreaseSpeedByTen,
   increaseSpeedByTen,
 } = handleTrip();
+const { searchRoute } = useFilters()
+const speedSelected = ref('')
 </script>
 <template>
   <div class="route-replay w-full max-w-4xl">
     <div class="flex items-center justify-between">
       <div>
         <h4 v-if="hasAVehicleBeenSelected" class="text-[#09090F] text-[16px]">
-          Journey of {{ selectedVehicle?.vehicle?.registration_number }}
+          Journey of {{ searchRoute }}
         </h4>
         <h4 v-else class="text-[#09090F] text-[16px]">No vehicle selected</h4>
         <div class="flex gap-x-1">
@@ -68,34 +72,34 @@ const {
       <div class="flex items-center gap-x-3 transform translate-y-px">
         <div
           :class="[
-            !hasAVehicleBeenSelected ? 'cursor-not-allowed' : 'cursor-pointer',
+            !hasAVehicleBeenSelected ? 'cursor-not-allowed' : 'cursor-pointer',speedSelected === '1x' ? 'bg-[#0DAC5C] hover:bg-opacity-30' : null
           ]"
-          @click="!hasAVehicleBeenSelected ? null : increaseSpeed(1000)"
+          @click="!hasAVehicleBeenSelected ? null : increaseSpeed(1000);speedSelected = '1x'"
           class="transition-all bg-[#E6FFF2] py-[6px] px-[12px] rounded-[8px] hover:bg-[#0DAC5C] hover:bg-opacity-30"
         >
           <span class="inline-block text-shuttlersGreen">1x</span>
         </div>
         <div
           :class="[
-            !hasAVehicleBeenSelected ? 'cursor-not-allowed' : 'cursor-pointer',
+            !hasAVehicleBeenSelected ? 'cursor-not-allowed' : 'cursor-pointer', speedSelected === '5x' ? 'bg-[#0DAC5C] hover:bg-opacity-30' : null,
           ]"
-          @click="!hasAVehicleBeenSelected ? null : increaseSpeed(500)"
+          @click="!hasAVehicleBeenSelected ? null : increaseSpeed(500);speedSelected = '5x'"
           class="transition-all bg-[#E6FFF2] py-[6px] px-[12px] rounded-[8px] hover:bg-[#0DAC5C] hover:bg-opacity-30"
         >
           <span class="inline-block text-shuttlersGreen">5x</span>
         </div>
         <div
           :class="[
-            !hasAVehicleBeenSelected ? 'cursor-not-allowed' : 'cursor-pointer',
+            !hasAVehicleBeenSelected ? 'cursor-not-allowed' : 'cursor-pointer', speedSelected === '10x' ? 'bg-[#0DAC5C] hover:bg-opacity-30' : null,
           ]"
-          @click="!hasAVehicleBeenSelected ? null : increaseSpeed(250)"
+          @click="!hasAVehicleBeenSelected ? null : increaseSpeed(250); speedSelected = '10x'"
           class="transition-all bg-[#E6FFF2] py-[6px] px-[12px] rounded-[8px] hover:bg-[#0DAC5C] hover:bg-opacity-30"
         >
           <span class="inline-block text-shuttlersGreen">10x</span>
         </div>
       </div>
     </div>
-    <div
+    <!-- <div
       :class="[hasAVehicleBeenSelected ? 'bg-[#E6FFF2]' : 'bg-gray-100']"
       class="w-full rounded-full h-[8px] mt-4"
     >
@@ -104,7 +108,7 @@ const {
         class="h-[8px] rounded-full transition-all duration-150 ease-linear"
         :style="`width: ${progressValue}%`"
       ></div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -118,3 +122,12 @@ const {
   box-shadow: 0px 10px 24px 0px rgba(33, 35, 37, 0.08);
 }
 </style>
+
+
+<!-- 
+list of cars:
+* DSZ-22AH
+* AGL890YD
+* APP-461DD
+* KJA-88XC
+ -->
